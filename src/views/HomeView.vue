@@ -1,9 +1,10 @@
 <script>
-import TheWelcome from "@/components/TheWelcome.vue";
+import TheForm from "@/components/TheForm.vue";
 import Rover from "@/utils/rover.js";
+import HelloWorld from "@/components/HelloWorld.vue";
 import { createConditionalExpression } from "@vue/compiler-core";
 export default {
-  components: { TheWelcome },
+  components: { TheForm, HelloWorld },
   data() {
     return {
       orders: "",
@@ -23,17 +24,13 @@ export default {
       );
       this.orders = info.orders;
       this.rover.currentOrientation = info.currentOrientation;
-      console.log(this.rover);
-      console.log(this.rover.currentOrientation);
       this.emitPayload = info.possitionX;
-      console.log(info);
-      console.log(info.target);
-      console.log(this.emitPayload);
     },
     doTheMath() {
       for (let i = 0; i <= this.orders.length - 1; i++) {
         switch (this.orders.charAt(i)) {
-          case "l" || "r":
+          case "l":
+          case "r":
             this.rover.rotate(this.orders.charAt(i));
           case "a":
             this.rover.moveOn(this.rover.orientationNumber);
@@ -45,21 +42,26 @@ export default {
           this.rover.position.y <= 0 ||
           this.rover.position.y >= this.rover.height
         ) {
-          this.colision();
+          this.colision(i + 1);
           break;
         }
       }
-      alert("endOfFoorLoop");
+      this.rover.finished = true;
+      this.rover.movements = i + 1;
       return this.rover;
     },
-    colision() {},
+    colision(movement) {
+      this.rover.finished = false;
+      this.rover.movements = movement;
+    },
   },
 };
 </script>
 
 <template>
   <main>
-    <TheWelcome @setObject="runRover" />
+    <hello-world />
+    <the-form @setObject="runRover" />
     <button class="btn" @click="doTheMath">Do the Math</button>
     <pre>{{ rover }}</pre>
   </main>

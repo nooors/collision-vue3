@@ -6,6 +6,8 @@ export default class Rover {
   square = { y: 0, x: 0 };
   // Object orientation, in object instantation, the initial orientation
   orientationNumber = Number;
+  finished = false;
+  movements = null;
 
   constructor(orientation, positionX, positionY, squareX, squareY) {
     this.position.x = positionX;
