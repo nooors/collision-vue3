@@ -1,14 +1,19 @@
 <template>
   <div class="form">
     <label :for="label">{{ labelName }}</label>
-    <input type="text" :value="modelValue" @input="inputValidate" />
+    <input
+      type="text"
+      :value="modelValue"
+      @input="inputValidate"
+      :maxlength="maxlength"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: "InputForm",
-  props: ["label", "labelName", "modelValue", "regExp"],
+  props: ["label", "labelName", "modelValue", "regExp", "maxlength"],
   emits: ["update:modelValue"],
   methods: {
     // Only lets input characters that match with regular expres

@@ -1,3 +1,11 @@
+<template>
+  <main>
+    <hello-world />
+    <the-form @setObject="runRover" />
+    <button class="btn" @click="doTheMath">Do the Math</button>
+    <pre>{{ rover }}</pre>
+  </main>
+</template>
 <script>
 import TheForm from "@/components/TheForm.vue";
 import Rover from "@/utils/rover.js";
@@ -57,12 +65,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <main>
-    <hello-world />
-    <the-form @setObject="runRover" />
-    <button class="btn" @click="doTheMath">Do the Math</button>
-    <pre>{{ rover }}</pre>
-  </main>
-</template>

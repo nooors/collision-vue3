@@ -27,6 +27,13 @@ export default {
         orders: "orders",
         nameOrders: "Code your movements",
       },
+      maxlength: {
+        positionY: 3,
+        positionX: 3,
+        orientation: 1,
+        width: 3,
+        height: 3,
+      },
       numRegExp: /^[0-9]/,
       orientationRegExp: /[neswNESW]/,
       ordersRegExp: /[lraLRA]/,
@@ -52,30 +59,35 @@ export default {
           :label-name="label.nameX"
           v-model="info.positionX"
           :reg-exp="numRegExp"
+          :maxlength="maxlength.positionX"
         />
         <input-form
           :label="label.positionY"
           :labelName="label.nameY"
           v-model="info.positionY"
           :reg-exp="numRegExp"
+          :maxlength="maxlength.positionY"
         ></input-form>
         <input-form
           :label="label.orientation"
           :label-name="label.nameOrientation"
           v-model="info.currentOrientation"
           :reg-exp="orientationRegExp"
+          :maxlength="maxlength.orientation"
         />
         <input-form
           :label="label.width"
           :label-name="label.nameWidth"
           v-model="info.width"
           :reg-exp="numRegExp"
+          :maxlength="maxlength.width"
         />
         <input-form
           :label="label.height"
           :labelName="label.nameHeight"
           v-model="info.height"
           :reg-exp="numRegExp"
+          :maxlength="maxlength.height"
         />
         <input-form
           :label="label.orders"
