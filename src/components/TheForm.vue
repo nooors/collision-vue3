@@ -3,6 +3,7 @@ import InputForm from "@/components/InputForm.vue";
 export default {
   name: "TheForm",
   components: { InputForm },
+  props: ["showOrders"],
   data() {
     return {
       info: {
@@ -37,15 +38,29 @@ export default {
       numRegExp: /^[0-9]/,
       orientationRegExp: /[neswNESW]/,
       ordersRegExp: /[lraLRA]/,
-      disabled: false,
+      divError: false,
     };
   },
   methods: {
     start: function () {
-      // Normailize data for class methods
-      this.info.currentOrientation = this.info.currentOrientation.toLowerCase();
-      this.info.orders = this.info.orders.toLowerCase();
-      this.$emit("setObject", this.info);
+      if (
+        this.info.positionX != "" &&
+        this.info.positionY != "" &&
+        this.info.currentOrientation != "" &&
+        this.info.height != "" &&
+        this.info.width != ""
+      ) {
+        this.disable = false;
+        // Normailize data for class methods
+        this.info.currentOrientation = this.info.currentOrientation.toLowerCase();
+        this.info.orders = this.info.orders.toLowerCase();
+        this.$emit("setObject", this.info);
+      } else {
+        this.divError = true;
+        setTimeout(() => {
+          this.divError = false;
+        }, 2000);
+      }
     },
   },
   watch: {
@@ -98,9 +113,13 @@ export default {
           :label-name="label.nameOrders"
           v-model="info.orders"
           :reg-exp="ordersRegExp"
+          v-if="showOrders"
         />
-        <input type="submit" value="Send" :disabled="disabled" />
+        <input type="submit" value="Send" />
       </form>
+      <div class="error" v-if="divError">
+        You need to set all data, thank you.
+      </div>
     </div>
   </div>
 </template>
@@ -110,9 +129,20 @@ export default {
   border: 1px solid grey;
   padding: 1rem;
 }
+@media screen and (min-width: 1400px) {
+  .container {
+    width: 38vw;
+  }
+}
 .form-group {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+.error {
+  color: red;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
 }
 </style>

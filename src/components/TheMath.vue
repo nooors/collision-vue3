@@ -1,8 +1,8 @@
 <template>
-  <main>
-    <the-form @setObject="runRover" />
+  <main v-if="choice">
+    <the-form @setObject="runRover" :showOrders="needTo" />
     <div class="do-math">
-      <button class="btn" @click="doTheMath">Do the Math</button>
+      <button class="btn" @click="doTheMath" v-if="needTo">Do the Math</button>
     </div>
     <div class="display" v-if="objectNew">
       <the-moves :value="rover.position.x">
@@ -19,6 +19,9 @@
       <the-result :value="rover.crashed"><slot>Result:</slot></the-result>
       <the-result :value="rover.movements"><slot>Movement:</slot></the-result>
     </div>
+    <div class="reset">
+      <button class="btn" @click="reset">Reset</button>
+    </div>
   </main>
 </template>
 <script>
@@ -31,6 +34,8 @@ import TheMoves from "./TheMoves.vue";
 export default {
   name: "TheMath",
   components: { TheForm, TheMoves, TheResult },
+  props: ["choice", "needTo"],
+  emits: ["views"],
   data() {
     return {
       orders: "",
@@ -38,6 +43,7 @@ export default {
       emitPayload: null,
       objectNew: false,
       crash: false,
+      movements: 0,
     };
   },
   mounted() {
@@ -50,10 +56,10 @@ export default {
     runRover(info) {
       this.rover = new Rover(
         info.currentOrientation, // class constructor
-        info.positionX,
-        info.positionY,
-        info.width,
-        info.height
+        parseInt(info.positionX),
+        parseInt(info.positionY),
+        parseInt(info.width),
+        parseInt(info.height)
       );
       this.orders = info.orders;
       this.rover.currentOrientation = info.currentOrientation;
@@ -72,9 +78,9 @@ export default {
         }
         if (
           this.rover.position.x <= 0 ||
-          this.rover.position.x >= this.rover.width ||
+          this.rover.position.x >= this.rover.square.x ||
           this.rover.position.y <= 0 ||
-          this.rover.position.y >= this.rover.height
+          this.rover.position.y >= this.rover.square.y
         ) {
           this.colision(i + 1);
           break;
@@ -89,12 +95,33 @@ export default {
       this.rover.finished = true;
       this.rover.movements = movement;
       this.rover.crashed = false;
-      alert("crash");
+      window.removeEventListener("keydown", this.keyHandler);
     },
     keyHandler(e) {
-      if (e.keyCode === 76 || e.keyCode === 82 || e.keyCode === 65) {
-        alert();
+      this.movements++;
+      switch (e.keyCode) {
+        case 76:
+          this.rover.rotate("L");
+          break;
+        case 82:
+          this.rover.rotate("r");
+          break;
+        case 65:
+          this.rover.moveOn(this.rover.orientationNumber);
+          break;
       }
+      if (
+        this.rover.position.x <= 0 ||
+        this.rover.position.x >= this.rover.square.x ||
+        this.rover.position.y <= 0 ||
+        this.rover.position.y >= this.rover.square.y
+      ) {
+        this.colision(this.movements);
+      }
+    },
+    reset() {
+      this.rover = new Rover();
+      this.$emit("views", false);
     },
   },
 };
@@ -126,6 +153,15 @@ export default {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
-  margin: 2rem;
+  margin: 1rem 2rem 0.5rem 2rem;
+}
+.reset {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.reset .btn {
+  border: 1px solid red;
+  color: magenta;
 }
 </style>

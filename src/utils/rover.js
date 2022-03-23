@@ -53,11 +53,11 @@ export default class Rover {
       if (this.orientationNumber === -1) {
         this.orientationNumber = 3;
       }
-      if (direction.toLowerCase() === "r") {
-        this.orientationNumber++;
-        if (this.orientationNumber === 4) {
-          this.orientationNumber = 0;
-        }
+    }
+    if (direction.toLowerCase() === "r") {
+      this.orientationNumber++;
+      if (this.orientationNumber === 4) {
+        this.orientationNumber = 0;
       }
     }
   }
