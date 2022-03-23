@@ -63,18 +63,17 @@ export default {
       );
       this.orders = info.orders;
       this.rover.currentOrientation = info.currentOrientation;
-      this.emitPayload = info.possitionX;
+      this.emitPayload = info.positionX;
       this.objectNew = true;
     },
     doTheMath() {
-      for (let i = 0; i <= this.orders.length - 1; i++) {
-        switch (this.orders.charAt(i)) {
-          case "l":
-          case "r":
-            this.rover.rotate(this.orders.charAt(i));
-          case "a":
-            this.rover.moveOn(this.rover.orientationNumber);
-            break;
+      let crash = 0;
+      for (let i = 0; i < this.orders.length; i++) {
+        if (this.orders.charAt(i) == "l" || this.orders.charAt(i) == "r") {
+          this.rover.rotate(this.orders.charAt(i));
+        }
+        if (this.orders.charAt(i) == "a") {
+          this.rover.moveOn(this.rover.orientationNumber);
         }
         if (
           this.rover.position.x <= 0 ||
@@ -83,19 +82,24 @@ export default {
           this.rover.position.y >= this.rover.square.y
         ) {
           this.colision(i + 1);
+          crash = 1;
           break;
         }
       }
-      this.rover.finished = true;
-      this.rover.movements = this.orders.length;
-      this.rover.crashed = true;
-      return this.rover;
+      // Before this correction, allways execute next group, even rover had crushed
+      if (crash == 0) {
+        this.rover.finished = true;
+        this.rover.movements = this.orders.length;
+        this.rover.crashed = true;
+        return this.rover;
+      }
     },
     colision(movement) {
       this.rover.finished = true;
       this.rover.movements = movement;
       this.rover.crashed = false;
       window.removeEventListener("keydown", this.keyHandler);
+      return this.rover;
     },
     keyHandler(e) {
       this.movements++;
