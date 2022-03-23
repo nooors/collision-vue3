@@ -8,6 +8,7 @@ export default class Rover {
   orientationNumber = 0;
   finished = false;
   movements = null;
+  crashed = false;
 
   constructor(orientation, positionX, positionY, squareX, squareY) {
     this.position.x = positionX;

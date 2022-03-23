@@ -37,6 +37,7 @@ export default {
       numRegExp: /^[0-9]/,
       orientationRegExp: /[neswNESW]/,
       ordersRegExp: /[lraLRA]/,
+      disabled: false,
     };
   },
   methods: {
@@ -48,10 +49,8 @@ export default {
     },
   },
   watch: {
-    info(){
-      
-    }
-  }
+    info() {},
+  },
 };
 </script>
 
