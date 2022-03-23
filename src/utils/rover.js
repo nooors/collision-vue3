@@ -5,7 +5,7 @@ export default class Rover {
   // Size of Square
   square = { y: 0, x: 0 };
   // Object orientation, in object instantation, the initial orientation
-  orientationNumber = Number;
+  orientationNumber = 0;
   finished = false;
   movements = null;
 

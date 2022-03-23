@@ -47,13 +47,18 @@ export default {
       this.$emit("setObject", this.info);
     },
   },
+  watch: {
+    info(){
+      
+    }
+  }
 };
 </script>
 
 <template>
   <div class="container">
-    <div class="form" @submit.prevent="start">
-      <form class="form-group" @submit.prevent="inputData">
+    <div class="form">
+      <form class="form-group" @submit.prevent="start">
         <input-form
           :label="label.positionX"
           :label-name="label.nameX"
@@ -95,8 +100,20 @@ export default {
           v-model="info.orders"
           :reg-exp="ordersRegExp"
         />
-        <input type="submit" />
+        <input type="submit" value="Send" :disabled="disabled" />
       </form>
     </div>
   </div>
 </template>
+<style scoped>
+.container {
+  width: 50vw;
+  border: 1px solid grey;
+  padding: 1rem;
+}
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+</style>

@@ -1,18 +1,15 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
   <header>
-
-  <RouterView />
+    <RouterView />
   </header>
-
 </template>
 
 <style>
-@import '@/assets/base.css';
+@import "@/assets/base.css";
 
 #app {
   max-width: 1280px;
@@ -106,5 +103,17 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+input {
+  background-color: transparent;
+  border: hsla(160, 100%, 37%, 1) solid 1px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: rgb(0, 225, 255);
+  cursor: pointer;
+  transition: all 200ms;
+}
+input:hover {
+  transform: scale(1.1);
 }
 </style>

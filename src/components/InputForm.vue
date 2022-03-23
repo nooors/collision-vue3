@@ -30,5 +30,24 @@ export default {
   },
 };
 </script>
-
-<style></style>
+<style scoped>
+.form {
+  display: flex;
+  flex-flow: wrap column;
+  align-content: center;
+  justify-content: center;
+}
+input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px grey solid;
+  border-radius: 0;
+  margin-bottom: 1rem;
+  color: rgb(0, 225, 255);  
+  width: 80%;
+}
+input:focus {
+  outline: none;
+  border-bottom: 1px rgb(0, 225, 255) solid;
+}
+</style>
