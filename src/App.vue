@@ -17,6 +17,8 @@ import { RouterLink, RouterView } from "vue-router";
   padding: 2rem;
 
   font-weight: normal;
+  background-color: rgb(24, 24, 24);
+  color: grey;
 }
 
 header {

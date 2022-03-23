@@ -39,32 +39,40 @@ export default {
       orientationRegExp: /[neswNESW]/,
       ordersRegExp: /[lraLRA]/,
       divError: false,
+      positionError: false,
     };
   },
   methods: {
     start: function () {
       if (
-        this.info.positionX != "" &&
-        this.info.positionY != "" &&
-        this.info.currentOrientation != "" &&
-        this.info.height != "" &&
-        this.info.width != ""
+        parseInt(this.info.positionX) >= parseInt(this.info.width) ||
+        parseInt(this.info.positionY) >= parseInt(this.info.height)
       ) {
-        this.disable = false;
+        this.positionError = true;
+        setTimeout(() => {
+          this.positionError = false;
+        }, 3000);
+        return;
+      }
+      if (
+        this.info.positionX == "" ||
+        this.info.positionY == "" ||
+        this.info.currentOrientation == "" ||
+        this.info.height == "" ||
+        this.info.width == ""
+      ) {
+        this.divError = true;
+        setTimeout(() => {
+          this.divError = false;
+        }, 3000);
+        return;
+      } else {
         // Normailize data for class methods
         this.info.currentOrientation = this.info.currentOrientation.toLowerCase();
         this.info.orders = this.info.orders.toLowerCase();
         this.$emit("setObject", this.info);
-      } else {
-        this.divError = true;
-        setTimeout(() => {
-          this.divError = false;
-        }, 2000);
       }
     },
-  },
-  watch: {
-    info() {},
   },
 };
 </script>
@@ -119,6 +127,9 @@ export default {
       </form>
       <div class="error" v-if="divError">
         You need to set all data, thank you.
+      </div>
+      <div class="error" v-if="positionError">
+        The positioin of Rover is already out of the square.
       </div>
     </div>
   </div>
