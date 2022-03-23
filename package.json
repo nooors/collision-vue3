@@ -2,11 +2,9 @@
   "name": "proba-tecnica-marc",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --o",
     "build": "vite build",
-    "preview": "vite preview --port 5050",
-    "install": "install",
-    "postinstall": "deb --open"
+    "preview": "vite preview --port 5050"
   },
   "dependencies": {
     "vue": "^3.2.31",
