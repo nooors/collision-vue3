@@ -2,7 +2,7 @@
   "name": "proba-tecnica-marc",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --o",
+    "dev": "vite --open",
     "build": "vite build",
     "preview": "vite preview --port 5050"
   },
